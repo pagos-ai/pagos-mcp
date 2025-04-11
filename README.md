@@ -22,7 +22,7 @@ brew install uv
 Clone the repository:
 
 ``` bash
-git clone https://github.com/pagos-ai/pagos-mcp-server.git
+git clone https://github.com/pagos-ai/pagos-mcp.git
 ```
 
 
