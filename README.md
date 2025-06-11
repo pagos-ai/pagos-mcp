@@ -28,7 +28,7 @@ git clone https://github.com/pagos-ai/pagos-mcp.git
 
 ### Add the MCP Server to Desktop Claude
 
-On MacOs, `~/Library/Application\ Support/Claude/claude_desktop_config.json`
+On MacOs, update config file `~/Library/Application\ Support/Claude/claude_desktop_config.json` and update elements with your systems specific values.
 
 ``` json
 {
@@ -37,12 +37,12 @@ On MacOs, `~/Library/Application\ Support/Claude/claude_desktop_config.json`
             "command": "uv",
             "args": [
                 "--directory",
-                "/path/to/pagos-mcp-server",
+                "</path/to/pagos-mcp-server>",
                 "run",
                 "pagos-mcp-server.py"
             ],
             "env": {
-                "PAGOS_API_KEY": "your-pagos-api-key"
+                "PAGOS_API_KEY": "<your-pagos-api-key>"
             }
         }
     }
