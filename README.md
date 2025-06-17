@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/pagos-ai-pagos-mcp-badge.png)](https://mseep.ai/app/pagos-ai-pagos-mcp)
+
 # Pagos Data MCP Server
 
 ## Capabilities
