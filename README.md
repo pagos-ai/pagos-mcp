@@ -10,6 +10,10 @@
 
 Follow the instructions in the [Pagos API Key](https://docs.pagos.ai/bin-data/getting-started-with-bin-data#generate-an-api-key) documentation to create an API key.
 
+### Enhanced BIN Data 
+
+Set to `"true"` for enhanced BIN response attributes which will provide the richest insights on the BIN. Set to `"false"` for basic BIN data. Defaults to `"false"` if value is not provided. Check your contract for any additional costs associated with enhanced bin data calls before setting to `"true"`.
+
 
 ### Clone the repository locally and install uv
 
@@ -42,7 +46,8 @@ On MacOs, update config file `~/Library/Application\ Support/Claude/claude_deskt
                 "pagos-mcp-server.py"
             ],
             "env": {
-                "PAGOS_API_KEY": "<your-pagos-api-key>"
+                "PAGOS_API_KEY": "<your-pagos-api-key>",
+                "ENHANCED_BIN_DATA": "true"
             }
         }
     }

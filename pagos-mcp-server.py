@@ -12,7 +12,7 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
 
     card = bin_data.card
     result = []
-    
+
     # Basic card information
     result.append("Card Details:")
     result.append("-------------")
@@ -30,7 +30,7 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
         result.append(f"Card Segment Type: {card.card_segment_type}")
     if card.combo_card:
         result.append(f"Combo Card: {card.combo_card}")
-    
+
     # Product information
     if card.product:
         result.append("")
@@ -40,7 +40,7 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
             result.append(f"Product: {card.product.product_name}")
         if card.product.product_id:
             result.append(f"Product ID: {card.product.product_id}")
-    
+
     # Bank information
     if card.bank:
         result.append("")
@@ -54,7 +54,7 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
             result.append(f"Phone: {card.bank.phone}")
         if card.bank.url:
             result.append(f"URL: {card.bank.url}")
-    
+
     # Country information
     if card.country:
         result.append("")
@@ -66,16 +66,20 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
             result.append(f"Country Code: {card.country.alpha2}")
         if card.country.numeric:
             result.append(f"Numeric Code: {card.country.numeric}")
-    
+
     # Authentication information
     if card.authentication:
         result.append("")
         result.append("Authentication:")
         result.append("---------------")
-        result.append(f"Authentication Required: {'Yes' if card.authentication.authentication_required else 'No'}")
+        result.append(
+            f"Authentication Required: {'Yes' if card.authentication.authentication_required else 'No'}"
+        )
         if card.authentication.authentication_name:
-            result.append(f"Authentication Name: {card.authentication.authentication_name}")
-    
+            result.append(
+                f"Authentication Name: {card.authentication.authentication_name}"
+            )
+
     # Technical details
     result.append("")
     result.append("Technical Details:")
@@ -92,10 +96,21 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
         result.append(f"PAN or Token: {card.pan_or_token}")
     if card.correlation_id:
         result.append(f"Correlation ID: {card.correlation_id}")
-    
+
     # Additional features
-    if any([card.level2, card.level3, card.alm, card.account_updater, card.domestic_only, 
-            card.gambling_blocked, card.reloadable, card.issuer_supports_tokenization, card.shared_bin]):
+    if any(
+        [
+            card.level2,
+            card.level3,
+            card.alm,
+            card.account_updater,
+            card.domestic_only,
+            card.gambling_blocked,
+            card.reloadable,
+            card.issuer_supports_tokenization,
+            card.shared_bin,
+        ]
+    ):
         result.append("")
         result.append("Additional Features:")
         result.append("-------------------")
@@ -110,14 +125,18 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
         if card.domestic_only is not None:
             result.append(f"Domestic Only: {'Yes' if card.domestic_only else 'No'}")
         if card.gambling_blocked is not None:
-            result.append(f"Gambling Blocked: {'Yes' if card.gambling_blocked else 'No'}")
+            result.append(
+                f"Gambling Blocked: {'Yes' if card.gambling_blocked else 'No'}"
+            )
         if card.reloadable is not None:
             result.append(f"Reloadable: {'Yes' if card.reloadable else 'No'}")
         if card.issuer_supports_tokenization is not None:
-            result.append(f"Issuer Supports Tokenization: {'Yes' if card.issuer_supports_tokenization else 'No'}")
+            result.append(
+                f"Issuer Supports Tokenization: {'Yes' if card.issuer_supports_tokenization else 'No'}"
+            )
         if card.shared_bin is not None:
             result.append(f"Shared BIN: {'Yes' if card.shared_bin else 'No'}")
-    
+
     # Currency and access information
     if card.issuer_currency or card.multi_account_access_indicator:
         result.append("")
@@ -126,8 +145,10 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
         if card.issuer_currency:
             result.append(f"Issuer Currency: {card.issuer_currency}")
         if card.multi_account_access_indicator:
-            result.append(f"Multi Account Access: {card.multi_account_access_indicator}")
-    
+            result.append(
+                f"Multi Account Access: {card.multi_account_access_indicator}"
+            )
+
     # Additional card brands
     if card.additional_card_brands:
         result.append("")
@@ -141,10 +162,14 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
                 if brand.card_brand_bank_name:
                     result.append(f"  Bank: {brand.card_brand_bank_name}")
                 if brand.ecom_enabled is not None:
-                    result.append(f"  E-commerce Enabled: {'Yes' if brand.ecom_enabled else 'No'}")
+                    result.append(
+                        f"  E-commerce Enabled: {'Yes' if brand.ecom_enabled else 'No'}"
+                    )
                 if brand.billpay_enabled is not None:
-                    result.append(f"  Bill Pay Enabled: {'Yes' if brand.billpay_enabled else 'No'}")
-    
+                    result.append(
+                        f"  Bill Pay Enabled: {'Yes' if brand.billpay_enabled else 'No'}"
+                    )
+
     # Cost information
     if card.cost and card.cost.interchange:
         result.append("")
@@ -156,7 +181,7 @@ def format_bin_data(bin_data: Optional[EnhancedBinApiResponse]) -> str:
             result.append(f"Regulated Name: {interchange.regulated_name}")
         if interchange.notes:
             result.append(f"Notes: {interchange.notes}")
-    
+
     return "\n".join(result)
 
 
@@ -168,7 +193,7 @@ async def get_bin_data_tool(bin: str) -> str:
     Args:
         bin (str): The BIN number to get data for.
     Returns:
-        str: A formatted string containing the enhanced BIN data.
+        str: A formatted string containing the BIN data (enhanced or basic based on ENHANCED_BIN_DATA config).
     """
     api_key = os.getenv("PAGOS_API_KEY")
     pagos_client = PagosClient(api_key=api_key)
